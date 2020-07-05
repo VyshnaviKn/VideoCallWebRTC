@@ -1,0 +1,35 @@
+{% load static %}
+
+<script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'js/kurento-utils.min.js' %}"></script> -->
+ <script type="text/javascript" src="http://builds.openvidu.io/release/6.9.0/js/kurento-utils.min.js" ></script>
+<h1>Client</h1>
+<BUTTON onclick="call()">START THE CALL</BUTTON>
+<div class="row">
+      <div class="col-md-5">
+        <h3>Existing video</h3>
+
+        <BUTTON onclick="showVideo()"> SHOW VIDEO</BUTTON>
+        <video id="static_video" width="320" height="240" controls>
+        <source  type="video/webm">
+        Your browser does not support the video tag.
+      </video>
+        <h3>Local stream</h3>
+        <video id="uiLocalVideo" playsinline muted
+            width="480px" height="360px" >
+              
+            </video>
+      </div>
+      <div class="col-md-2">
+        <BUTTON onclick="call()">START THE CALL</BUTTON>
+        <br>
+        <br>
+         <BUTTON onclick="call()">STOP THE CALL</BUTTON>
+      </div>
+      <div class="col-md-5">
+        <h3>Remote stream</h3>
+        <video id="uiRemoteVideo" playsinline
+            width="480px" height="360px"></video>
+      </div>
+    </div>
