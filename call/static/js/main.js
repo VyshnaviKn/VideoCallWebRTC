@@ -92,27 +92,25 @@ function sendMessage(message)
 /* ==== WebSocket signaling ==== */
 /* ============================= */
 
-// ws.onmessage = function(message)
-// {
-//   const jsonMessage = JSON.parse(message.data);
-//   console.log("[onmessage] Received message: " + message.data);
+ws.onmessage = function(message)
+{
+  debugger;
+  const jsonMessage = JSON.parse(message.data);
+  console.log("[onmessage] Received message: " + message.data);
 
-//   switch (jsonMessage.id) {
-//     case 'PROCESS_SDP_ANSWER':
-//       handleProcessSdpAnswer(jsonMessage);
-//       break;
-//     case 'ADD_ICE_CANDIDATE':
-//       handleAddIceCandidate(jsonMessage);
-//       break;
-//     case 'ERROR':
-//       handleError(jsonMessage);
-//       break;
-//     default:
-//       // Ignore the message
-//       console.warn("[onmessage] Invalid message, id: " + jsonMessage.id);
-//       break;
-//   }
-// }
+  switch (jsonMessage.id) {
+    case 'ADD_ICE_CANDIDATE':
+      handleAddIceCandidate(jsonMessage);
+      break;
+    case 'ERROR':
+      handleError(jsonMessage);
+      break;
+    default:
+      // Ignore the message
+      console.warn("[onmessage] Invalid message, id: " + jsonMessage.id);
+      break;
+  }
+}
 
 // PROCESS_SDP_ANSWER ----------------------------------------------------------
 
@@ -125,7 +123,6 @@ function handleProcessSdpAnswer(jsonMessage)
     console.warn("[handleProcessSdpAnswer] Skip, no WebRTC Peer");
     return;
   }
-  
   webRtcPeer.processAnswer(jsonMessage.sdpAnswer, (err) => {
     if (err) {
       sendError("[handleProcessSdpAnswer] Error: " + err);
@@ -235,7 +232,6 @@ function uiStart()
         stop();
         return;
       }
-
       sendMessage({
         id: 'PROCESS_SDP_OFFER',
         sdpOffer: sdpOffer,
@@ -243,14 +239,12 @@ function uiStart()
 
       console.log("[start/WebRtcPeerSendrecv/generateOffer] Done!");
       uiSetState(UI_STARTED);
-      //window.location="{% send_offer 0 %}".replace(/0/, sdpOffer);
       resp = $.post("http://localhost:8080/send_offer/",{"sdp_offer":sdpOffer},
         function(data, status){
                 console.log(data)
                 handleProcessSdpAnswer(data)
                   }
         );
-
     });
   });
 }

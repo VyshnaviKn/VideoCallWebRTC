@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from call.views import call_view, index, SendOffer
+from call.views import call_view, index, SendOffer, AddIceCandidate
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",index),
     path("call/", call_view),
-    path("send_offer/",SendOffer.as_view())
-]
+    path("send_offer/",SendOffer.as_view()),
+    path("add_ice_candidate/",AddIceCandidate.as_view()),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

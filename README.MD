@@ -1,5 +1,5 @@
 Install docker in the machine https://docs.docker.com/get-docker/
-CD to video call folder
+CD to videocallWebRTC folder
 run the below commands
 docker-compose build
 docker-compose up -d
